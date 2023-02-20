@@ -1,0 +1,3 @@
+[submodule "ask-kstu-frontend"]
+	path = ask-kstu-frontend
+	url = https://github.com/Zamani2025/ask-kstu-frontend

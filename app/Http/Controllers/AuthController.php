@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
+    // kvngthr!v3 commited
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register','home']]);
