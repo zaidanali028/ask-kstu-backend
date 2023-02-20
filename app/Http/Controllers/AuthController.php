@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-    // kvngthr!v3 commited
+    // kvngthr!v3 commited->
 
     public function __construct()
     {
