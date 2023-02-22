@@ -45,6 +45,11 @@ return [
             'provider' => 'users',
             'hash' => true,
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            // 'hash' => true,
+        ],
     ],
     // you need to implement this
 
@@ -71,6 +76,12 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'admins'=>[
+            'driver'=>'eloquent',
+            'model' => App\Models\Admins::class,
+
+            
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

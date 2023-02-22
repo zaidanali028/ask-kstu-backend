@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-
 class AuthController extends Controller
 {
 
@@ -16,10 +15,11 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register','home']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'home']]);
     }
 
-    public  function get_auth_user(Request $request ){
+    public function get_auth_user(Request $request)
+    {
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
@@ -59,25 +59,41 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-    Validator::make($request->all(),[
-        'email' => 'required|string|email|max:255|unique:users',
-        'name' => 'required|regex:/^[\pL\s\-]+$/u|string|max:255',
-        'password' => 'required|confirmed|min:10|alpha_num|max:30',
-        'gender' => 'required',
-        'admin_type' => 'required',
-    ])->validate();
+
+        Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|regex:/^[\pL\s\-]+$/u|string|max:255',
+            'password' => 'required|confirmed|min:10|alpha_num|max:30',
+            'gender' => 'required',
+            'user_img' => 'required',
+            'faculty_id' => 'required',
+            'index_no' => 'required|unique:users',
+            'dept_id' => 'required',
+            'program_id' => 'required',
+            // 'status' => 'required',
+            'dept_id' => 'required',
+            'yr_of_admission' => 'required',
+            'yr_of_completion' => 'required',
+
+            // 'admin_type' => 'required',
+        ])->validate();
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'gender' => $request->gender,
 
-            'admin_type' => $request->admin_type,
+            'user_img' =>  $request->user_img,
+            'faculty_id' =>  $request->faculty_id,
+            'index_no' =>  $request->index_no,
+            'dept_id' =>  $request->dept_id,
+            'program_id' =>  $request->program_id,
+            'status' =>  1,
+            'dept_id' =>  $request->dept_id,
+            'yr_of_admission' =>  $request->yr_of_admission,
+            'yr_of_completion' =>  $request->yr_of_completion
 
         ]);
-
-
-
 
         $token = Auth::login($user);
         return response()->json([
@@ -97,7 +113,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
-        ],200);
+        ], 200);
     }
 
     public function refresh()
