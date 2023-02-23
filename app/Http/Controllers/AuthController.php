@@ -125,7 +125,7 @@ class AuthController extends Controller
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ],
-        ]);
+        ],200);
     }
 
 }

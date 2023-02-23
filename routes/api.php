@@ -15,14 +15,15 @@ use App\Http\Controllers\AuthController;
 
 // prefix of api is /api/v1/{route-here}
 // Example: http://127.0.0.1:8000/api/v1/login|me|register.....
+// git submodule update --recursive --remote
 Route::prefix('/v1')->namespace('App\Http\Controllers')->group(function () {
         Route::get('me', 'AuthController@get_auth_user');
     Route::post('register', 'AuthController@register');
     Route::post('logout', 'AuthController@logout');
     Route::post('login', 'AuthController@login');
     Route::post('refresh', 'AuthController@refresh');
-   
-   
+
+
 
 
 
