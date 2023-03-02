@@ -108,6 +108,9 @@
     <script src="{{url('admin/js/toastr.min.js')}}"></script>
     <script src="{{url('admin/js/custom/custom.js')}}"></script>
 
+    {{--  sweet alert plugin  --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     @livewireScripts
 </body>

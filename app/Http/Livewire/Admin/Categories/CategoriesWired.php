@@ -15,6 +15,7 @@ class CategoriesWired extends Component
     public $inputs = [];
     public $category_id;
     public $btn_text;
+    protected $listeners = ['confirm_delete_category_alert',];
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
@@ -50,12 +51,25 @@ class CategoriesWired extends Component
 
 
     }
+    public function delete_category($category_id){
+        $this->category_id=$category_id;
+        $this->dispatchBrowserEvent('show_delete_category_alert');
+
+
+
+    }
     public function update_category(){
         $validated_data = Validator::make($this->inputs, $this->rules)->validate();
         CategoryModel::where(['id'=> $this->category_id])->update($validated_data);
         $this->dispatchBrowserEvent('hide_add_category_modal');
         $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>' Category Updated Successfully']);
 
+
+
+    }
+    public function confirm_delete_category_alert(){
+        CategoryModel::findOrFail($this->category_id)->delete();
+        $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>' Category Deleted Successfully']);
 
 
     }
@@ -96,6 +110,8 @@ class CategoriesWired extends Component
 
 
     }
+
+
 
 
     public function render()

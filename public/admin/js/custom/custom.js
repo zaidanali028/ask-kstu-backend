@@ -33,6 +33,29 @@ $(document).ready(() => {
 
      })
 
+    //delete events sweet-alerts
+    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'}]
+    deleteEvents.forEach((event_) => {
+        window.addEventListener(event_.eventFromLiveWire, e => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'danger',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // telling livewire user has clicked on confimation to delete
+                    Livewire.emit(event_.eventToLiveWire)
+
+                }
+            })
+        });
+
+    })
+
 
 
 

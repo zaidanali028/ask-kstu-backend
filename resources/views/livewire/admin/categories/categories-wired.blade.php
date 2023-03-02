@@ -58,7 +58,7 @@
 
 
                                     <a style="font-size: 20px" class="mdi mdi-close-box-outline"
-                                        wire:click.prevent=""></a>
+                                        wire:click.prevent="delete_category({{ $category->id }})"></a>
                                 </td>
 
                             </tr>
@@ -84,7 +84,7 @@
 <!-- Modal 1-->
 <div wire:ignore.self class="modal fade" id="add_category_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-md modal-dialog-centered ">
+<div class="modal-dialog modal-sm modal-dialog-centered ">
     <div class="modal-content">
         <div class="modal-header">
 
