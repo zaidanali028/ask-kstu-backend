@@ -5,14 +5,18 @@ namespace App\Http\Livewire\Admin\Categories;
 use App\Models\Category as CategoryModel;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CategoriesWired extends Component
 {
-    public $categories;
+      use WithPagination;
+    // public $categories;
     public $addNewCategory;
     public $inputs = [];
     public $category_id;
     public $btn_text;
+    protected $paginationTheme = 'bootstrap';
+
     protected $rules = [
         'name' => 'required',
         'status' => 'required',
@@ -96,12 +100,12 @@ class CategoriesWired extends Component
 
     public function render()
     {
-        $this->categories = CategoryModel::all();
-        // dd(Category::all());
+        $categories = CategoryModel::latest()->paginate(2);
+        // DD(  $categories);
 
-        return view('livewire.admin.categories.categories-wired', [
-            'categories' => $this->categories,
 
-        ]);
+        return view('livewire.admin.categories.categories-wired')
+        ->with(compact('categories'));
+
     }
 }

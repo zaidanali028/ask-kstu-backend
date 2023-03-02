@@ -36,6 +36,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{--  @json($categories)  --}}
                             @if (!empty($categories))
                             @foreach ($categories as $category )
                             <tr>
@@ -66,8 +67,13 @@
 
                             @endif
 
+
                         </tbody>
+
                     </table>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $categories->links() }}
+                    </div>
                 </div>
             </div>
         </div>
