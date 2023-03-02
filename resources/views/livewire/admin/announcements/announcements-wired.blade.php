@@ -59,7 +59,7 @@
                                         : 'mdi-toggle-switch-off';
                                         @endphp
                                         <i wire:click="change_announcement_status({{ $announcement->id }},{{ $announcement->status }})"
-                                            style="font-size: 30px" class="mdi {{ $status_toggle_icon }}"></i>
+                                            style="font-size: 30px" class="mdi {{ $status_toggle_icon }} "></i>
 
                                     </td>
                                     <td>{{ $announcement->views }}</td>
