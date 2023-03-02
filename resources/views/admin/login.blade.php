@@ -9,7 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>ASK-KSTU ADMIN PANEL | {{ Session::get('page') }}</title>
+
+
+    {{--  toastr css  --}}
+    <link rel="stylesheet" href="{{url('admin/css/toastr.css')}}">
+
 
     <!-- Custom fonts for this template-->
     <link href="{{ url('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -21,11 +26,14 @@
     <link href="{{ url('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
     @livewireStyles
 
+    {{--  load-awesome  --}}
+    <link rel="stylesheet" href="{{url('admin/css/load-awesome.css')}}">
+
 </head>
 
 <body class="bg-gradient-primary">
 
-   
+
     <livewire:admin.login-wired/>
 
 
@@ -41,7 +49,10 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ url('admin/js/sb-admin-2.min.js')}}"></script>
     @livewireScripts
-   
+    <script src="{{url('admin/js/toastr.min.js')}}"></script>
+    <script src="{{url('admin/js/custom/custom.js')}}"></script>
+
+
 
 </body>
 

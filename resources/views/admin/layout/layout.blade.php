@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title style="text-transform: uppercase;">ASK-KSTU ADMIN PANEL | {{ Session::get('page') }}</title>
+
 
     <!-- Custom fonts for this template-->
     <link href="{{ url('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -19,7 +20,18 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ url('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+
+    {{-- md-icons --}}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.1.96/css/materialdesignicons.css" rel="stylesheet">
     @livewireStyles
+
+    {{-- LOAD AWESOME --}}
+    <link rel="stylesheet" href="{{url('admin/css/load-awesome.css')}}">
+    {{-- toastr css --}}
+    <link rel="stylesheet" href="{{url('admin/css/toastr.css')}}">
+
 
 </head>
 
@@ -38,7 +50,7 @@
 
             <!-- Main Content -->
             @yield('main-content')
-            
+
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -71,7 +83,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="/admin/logout">Logout</a>
                 </div>
             </div>
         </div>
@@ -93,7 +105,11 @@
     <!-- Page level custom scripts -->
     <script src="{{ url('admin/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{ url('admin/js/demo/chart-pie-demo.js')}}"></script>
-    {{--  @livewireScripts  --}}
+    <script src="{{url('admin/js/toastr.min.js')}}"></script>
+    <script src="{{url('admin/js/custom/custom.js')}}"></script>
+
+
+    @livewireScripts
 </body>
 
 </html>
