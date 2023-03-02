@@ -29,10 +29,10 @@ class AdminController extends Controller
 
     public function categories(){
         Session::put('page','categories');
-        return view('admin.categories');
+        return view('admin.announcements.categories');
+    }
 
-
-
+    public function anouncements(){
 
     }
 }

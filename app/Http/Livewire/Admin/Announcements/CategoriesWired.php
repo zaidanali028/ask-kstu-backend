@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Categories;
+namespace App\Http\Livewire\Admin\Announcements;
+
 
 use App\Models\Category as CategoryModel;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
-
 class CategoriesWired extends Component
-{
-      use WithPagination;
+{ use WithPagination;
     // public $categories;
     public $addNewCategory;
     public $inputs = [];
@@ -23,9 +22,7 @@ class CategoriesWired extends Component
         'status' => 'required',
 
     ];
-    // public function mount(){
-    //     dd('yo');
-    // }
+
 
     public function new_category()
     {
@@ -112,15 +109,11 @@ class CategoriesWired extends Component
     }
 
 
-
-
     public function render()
     {
-        $categories = CategoryModel::latest()->paginate(2);
-        // DD(  $categories);
+    $categories = CategoryModel::latest()->paginate(2);
 
-
-        return view('livewire.admin.categories.categories-wired')
+        return view('livewire.admin.announcements.categories-wired')
         ->with(compact('categories'));
 
     }

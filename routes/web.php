@@ -48,6 +48,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     Route::get('dashboard', 'adminController@dashboard');
     Route::get('logout', 'adminController@logout');
     Route::get('categories', 'adminController@categories');
+    Route::get('anouncements', 'adminController@anouncements');
+    Route::get('announcement-details', 'adminController@announcement-details');
 
 
 

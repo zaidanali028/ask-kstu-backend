@@ -9,7 +9,7 @@
     <!-- Begin Page Content -->
     <div class="container">
 
-        <livewire:admin.categories.categories-wired/>
+        <livewire:admin.announcements.categories-wired/>
 
 
     </div>
