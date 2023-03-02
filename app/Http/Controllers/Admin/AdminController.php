@@ -12,13 +12,15 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function dashboard(){
+        Session::put('page','dashboard');
+
 
         return view('admin.dashboard');
 
     }
 
     public function login(){
-        Session::put('page','LOGIN');
+        Session::put('page','login');
         return view('admin.login');
     }
     public function logout(Request $request)
@@ -33,6 +35,8 @@ class AdminController extends Controller
     }
 
     public function anouncements(){
+        Session::put('page','anouncements');
+        return view('admin.announcements.anouncements');
 
     }
 }

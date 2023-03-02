@@ -96,6 +96,8 @@
                 --}}
             </div>
             <div class="modal-body">
+   @include('admin.layout.global-errors')
+
                 <form  wire:submit.prevent={{ $addNewCategory ? 'submit_add_new_category' : 'update_category ' }} method="POST" >
 
                     <div class="form-group">
@@ -107,12 +109,13 @@
                             @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        @error('status')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                       
 
                     </div>
                     <div class="ml-1 form-group row">
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
 
                         <label class="col-sm-3 col-form-label">Status</label>
                         <div class="col-sm-4">

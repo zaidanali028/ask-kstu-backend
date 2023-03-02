@@ -10,7 +10,7 @@ $(document).ready(() => {
 
 
     // open-modal events
-    let openModalEvents = [{ eventFromLiveWire: 'show_add_category_modal',modalToShow:'add_category_modal' }]
+    let openModalEvents = [{ eventFromLiveWire: 'show_add_category_modal',modalToShow:'add_category_modal' },{ eventFromLiveWire: 'show_add_announcement_modal',modalToShow:'add_announcement_modal' }]
     openModalEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
             // alert('yoh!')
@@ -22,7 +22,7 @@ $(document).ready(() => {
     })
 
      // close-modal events
-     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' }]
+     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' },{ eventFromLiveWire: 'hide_add_announcement_modal',modalToHide:'add_announcement_modal' }]
      closeModalEvents.forEach((event_) => {
          window.addEventListener(event_.eventFromLiveWire, e => {
              // alert('yoh!')
@@ -34,7 +34,7 @@ $(document).ready(() => {
      })
 
     //delete events sweet-alerts
-    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'}]
+    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'},{eventFromLiveWire:'show_delete_announcement_alert',eventToLiveWire:'confirm_delete_announcement_alert'}]
     deleteEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
             Swal.fire({

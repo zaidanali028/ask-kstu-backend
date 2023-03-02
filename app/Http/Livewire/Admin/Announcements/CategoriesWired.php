@@ -111,7 +111,7 @@ class CategoriesWired extends Component
 
     public function render()
     {
-    $categories = CategoryModel::latest()->paginate(2);
+    $categories = CategoryModel::latest()->paginate(50);
 
         return view('livewire.admin.announcements.categories-wired')
         ->with(compact('categories'));

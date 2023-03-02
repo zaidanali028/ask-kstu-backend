@@ -12,8 +12,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item active @if (Session::get('page') == 'dashboard') bg-warning text-white @endif ">
+        <a class="nav-link" href="/admin/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -35,10 +35,10 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
+                <h6 class="collapse-header">Announcement Features:</h6>
                 <a class="collapse-item  @if (Session::get('page') == 'categories') bg-primary text-white @endif" href="/admin/categories">Categories</a>
-                <a class="collapse-item  @if (Session::get('page') == 'anouncements') bg-primary text-white @endif" href="/admin/anouncements">Categories</a>
-                <a class="collapse-item  @if (Session::get('page') == 'announcement-details') bg-primary text-white @endif" href="/admin/announcement-details'">Categories</a>
+                <a class="collapse-item  @if (Session::get('page') == 'anouncements') bg-primary text-white @endif" href="/admin/anouncements">Announcements</a>
+                <a class="collapse-item  @if (Session::get('page') == 'announcement-details') bg-primary text-white @endif" href="/admin/announcement-details'">Announcements Details</a>
             </div>
         </div>
     </li>
