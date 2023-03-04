@@ -75,10 +75,13 @@
                                             </div>
 
                                           </div>
-                                          <div class="mt-3 d-flex justify-content-end">
-                                            {{ $category_data->paginated_announcements()->links() }}
-                                        </div>
-                                          
+                                        
+                                         </div>
+                                         <div class="row">
+                                            <div class="ml-2 mt-3 d-flex justify-content-end">
+                                                {{ $category_data->paginated_announcements()->links() }}
+                                            </div>
+                                         </div>
                                             @empty
                                             <p>Data Currently Empty</p>
                                             @endforelse
