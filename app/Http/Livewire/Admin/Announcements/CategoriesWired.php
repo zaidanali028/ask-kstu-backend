@@ -103,7 +103,7 @@ class CategoriesWired extends Component
 
     public function change_category_status($category_id,$category_status){
         CategoryModel::where(['id'=> $category_id])->update(['status'=>$category_status=="1"?0:1]);
-        $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>'Category Status Added Successfully']);
+        $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>'Category Status Updated Successfully']);
 
 
     }

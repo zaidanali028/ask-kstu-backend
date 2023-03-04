@@ -12,4 +12,14 @@ class Category extends Model
         'name',
         'status'
     ];
+
+    public function get_category_announcements(){
+        return $this->hasMany('App\Models\Announcement','category_id','id')->latest();
+        // ->select('category_name');
+    }
+
+    public function paginated_announcements($perPage = 1)
+    {
+        return $this->get_category_announcements()->paginate($perPage);
+    }
 }

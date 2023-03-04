@@ -77,4 +77,15 @@ $(document).ready(() => {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+
+
+    let elements=document.querySelectorAll('.category_item')
+    elements.forEach(item => {
+
+        item.addEventListener('click',()=>{
+            alert(   $('.category_item > a').attr('href'))
+
+           })
+    });
+
 });

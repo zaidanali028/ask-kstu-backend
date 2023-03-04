@@ -39,4 +39,9 @@ class AdminController extends Controller
         return view('admin.announcements.anouncements');
 
     }
+    public function announcement_details(){
+        Session::put('page','announcement details');
+        return view('admin.announcements.announcement_details');
+
+    }
 }

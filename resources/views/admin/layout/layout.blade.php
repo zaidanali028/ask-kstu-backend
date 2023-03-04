@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title style="text-transform: uppercase;">ASK-KSTU ADMIN PANEL | {{ Session::get('page') }}</title>
+    <title style="text-transform: uppercase;" class="text-uppercase">ASK-KSTU  | {{ Session::get('page') }}</title>
 
 
     <!-- Custom fonts for this template-->
@@ -97,7 +97,7 @@
     <script src="{{ url('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ url('admin/js/sb-admin-2.min.j')}}"></script>
+    <script src="{{ url('admin/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
     <script src="{{ url('admin/vendor/chart.js/Chart.min.js')}}"></script>

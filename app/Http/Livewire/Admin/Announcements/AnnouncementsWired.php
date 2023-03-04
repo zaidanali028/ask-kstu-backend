@@ -97,13 +97,13 @@ class AnnouncementsWired extends Component
     public function change_announcement_status($announcement_id, $announcement_status)
     {
         AnnouncementModel::where(['id' => $announcement_id])->update(['status' => $announcement_status == "1" ? 0 : 1]);
-        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => 'announcement Status Added Successfully']);
+        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => 'Announcement  Status Updated Successfully']);
 
     }
 
     public function render()
     {
-        $announcements = AnnouncementModel::latest()->paginate(50);
+        $announcements = AnnouncementModel::with(['get_announcement_category'])->latest()->paginate(50);
         $categories = CategoryModel::latest()->get();
 
         return view('livewire.admin.announcements.announcements-wired')->with(compact('announcements','categories'));

@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed  @if (Session::get('page') == 'categories'||Session::get('page') == 'anouncements'||Session::get('page') == 'announcement-details') bg-warning text-white @endif " href="#" data-toggle="collapse" data-target="#collapseTwo"
+        <a class="nav-link collapsed  @if (Session::get('page') == 'categories'||Session::get('page') == 'anouncements'||Session::get('page') == 'announcement details') bg-warning text-white @endif " href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="mdi mdi-chart-gantt"></i>
             <span>ANNOUNCEMENT UTIL</span>
@@ -38,7 +38,7 @@
                 <h6 class="collapse-header">Announcement Features:</h6>
                 <a class="collapse-item  @if (Session::get('page') == 'categories') bg-primary text-white @endif" href="/admin/categories">Categories</a>
                 <a class="collapse-item  @if (Session::get('page') == 'anouncements') bg-primary text-white @endif" href="/admin/anouncements">Announcements</a>
-                <a class="collapse-item  @if (Session::get('page') == 'announcement-details') bg-primary text-white @endif" href="/admin/announcement-details'">Announcements Details</a>
+                <a class="collapse-item  @if (Session::get('page') == 'announcement details') bg-primary text-white @endif" href="/admin/announcement-details">Announcements Details</a>
             </div>
         </div>
     </li>

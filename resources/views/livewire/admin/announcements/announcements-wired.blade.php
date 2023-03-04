@@ -38,7 +38,10 @@
                                     <th>
                                         DIS-LIKES
                                     </th>
+                                    <th>
+                                        CATEGORY
 
+                                    </th>
                                     <th>
                                         ACTIONS
                                     </th>
@@ -65,6 +68,7 @@
                                     <td>{{ $announcement->views }}</td>
                                     <td>{{ $announcement->likes }}</td>
                                     <td>{{ $announcement->dislikes }}</td>
+                                    <td>{{ $announcement->get_announcement_category->name }}</td>
                                     <td>
                                         <a wire:click.prevent="edit_announcement({{ $announcement->id }})"
                                             style="font-size: 20px" class=" mdi mdi-pencil-box-outline"></a>
