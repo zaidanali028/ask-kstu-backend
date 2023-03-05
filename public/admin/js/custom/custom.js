@@ -10,7 +10,9 @@ $(document).ready(() => {
 
 
     // open-modal events
-    let openModalEvents = [{ eventFromLiveWire: 'show_add_category_modal',modalToShow:'add_category_modal' },{ eventFromLiveWire: 'show_add_announcement_modal',modalToShow:'add_announcement_modal' }]
+    let openModalEvents = [{ eventFromLiveWire: 'show_add_category_modal',modalToShow:'add_category_modal' },{ eventFromLiveWire: 'show_add_announcement_modal',modalToShow:'add_announcement_modal' },{
+        eventFromLiveWire:'show_announcement_key_moments',modalToShow:'announcement_key_moments'
+    }]
     openModalEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
             // alert('yoh!')
