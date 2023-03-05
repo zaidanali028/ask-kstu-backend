@@ -112,7 +112,7 @@
                         --}}
                     </div>
                     <div class="modal-body">
-                        @include('admin.layout.global-errors')
+                        {{--  @include('admin.layout.global-errors')  --}}
 
                         <h4>{{ $current_announcement_name }}</h4>
                         <hr>
@@ -128,17 +128,34 @@
                                 <div class="card">
                                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
                                         alt="...">
+                                              <hr>
+                                        <input type="file" wire:model.defer="announcement_key_moments.{{ $index }}.image"  class="form-control-file border border-primary rounded mt-1" id="image-upload">
+                                        <div class="invalid-feedback">
+                                            @error('announcement_key_moments.'. $index .'.image')
+                                            {{ $message }}
+                                        @enderror </div>
+
+                                    <hr>
                                     <div class="card-body">
-                                        <h5 class="card-title">Announcement Title</h5>
                                         <div class="form-group">
                                             <label for="subtitleInput">Announcement Subtitle</label>
-                                            {{--  wire:model.defer="product_attributes.{{ $index }}.size"  --}}
 
-                                            <input type="text" wire:model.defer="announcement_key_moments.{{ $index }}.image_sub_title" class="form-control" id="subtitleInput">
-                                        </div>
+
+                                            <input type="text" wire:model.defer="announcement_key_moments.{{ $index }}.image_sub_title" class="form-control
+                                            @error('announcement_key_moments.'. $index .'.image_sub_title') is-invalid @enderror
+
+                                            " id="subtitleInput">
+                                            <div class="invalid-feedback">
+                                                @error('announcement_key_moments.'. $index .'.image_sub_title')
+                                                {{ $message }}
+                                            @enderror </div>
+                                            </div>
                                         <div class="form-group">
                                             <label for="descriptionTextarea">Announcement Description</label>
-                                            <textarea class="form-control @error('announcement_key_moments.' . $index . '.image_description')  is-invalid @enderror" id="descriptionTextarea" wire:model.defer="announcement_key_moments.{{ $index }}.image_description"  rows="3"></textarea>
+                                            <textarea class="form-control
+                                            @error('announcement_key_moments.'. $index .'.image_description') is-invalid @enderror
+
+                                            " id="descriptionTextarea" wire:model.defer="announcement_key_moments.{{ $index }}.image_description"  rows="3"></textarea>
                                             <div class="invalid-feedback">
                                                 @error('announcement_key_moments.'. $index .'.image_description')
                                                 {{ $message }}
@@ -147,8 +164,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-primary w-100" wire:click.defer="add_new_announcement()"
-                            >Submit</button>
+
+
+                            <button class="btn btn-primary w-100 mt-3" wire:click.prevent='add_new_announcement'>Submit Key Moment(s)</button>
 
                             @empty
                             <p>No key moments for this announcement</p>
@@ -178,5 +196,6 @@
 
         {{-- end of conainer --}}
     </div>
+</div>
 </div>
 </div>

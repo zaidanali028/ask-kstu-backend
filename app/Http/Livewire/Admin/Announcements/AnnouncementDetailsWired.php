@@ -6,11 +6,15 @@ use App\Models\AnnouncementDetail as AnnouncementDetailModel;
 use App\Models\Category as CategoryModel ;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+
 
 
 class AnnouncementDetailsWired extends Component
 {
 use WithPagination;
+use WithFileUploads;
+
 protected $paginationTheme = 'bootstrap';
 public $announcement_key_moments;
 
@@ -20,10 +24,16 @@ public $announcement_key_moments;
     // 'product_attributes.*.size' => 'required',
 
     protected  $rules=[
-        'announcement_key_moments.*.image_description'=>'required'
+        'announcement_key_moments.*.image_description'=>"required|string",
+        'announcement_key_moments.*.image_sub_title'=>"string",
+        'announcement_key_moments.*.image'=>'image'
     ];
     protected $messages = [
-        'announcement_key_moments.*.image_description'=>'kindly provide a key moment description for this announcement'
+        'announcement_key_moments.*.image_description'=>'kindly provide a key moment description for this announcement',
+        'announcement_key_moments.*.image'=>'kindly provide a key moment image/leave blank for this announcement',
+        'announcement_key_moments.*.image_sub_title'=>'kindly provide a valid key moment statement/leave blank for this announcement',
+
+
     ];
 
     // current_tab will default to 0 as looping starts from 0
@@ -34,7 +44,8 @@ public $announcement_key_moments;
 
     public function add_new_announcement(){
 
-        $this->validate($this->rules,$this->messages);
+       $validated_data= $this->validate($this->rules,$this->messages);
+    //    dd( $this->announcement_key_moments);
 
     //     foreach ($this->product_attributes as $product_attribute) {
     //         $product_attribute->product_id = $this->product_id;
