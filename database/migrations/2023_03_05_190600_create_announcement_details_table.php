@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('announcement_id');
             $table->string('image_sub_title')->nullable();
             $table->string('image')->nullable();
-            $table->string('image_description');
+            $table->mediumText('image_description');
 
             $table->timestamps();
         });

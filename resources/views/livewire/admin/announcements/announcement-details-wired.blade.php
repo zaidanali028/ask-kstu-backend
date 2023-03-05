@@ -22,8 +22,8 @@
 
         <div class="tab-content  ">
 
-        <div class="row mt-3">
-            <!-- Tab panes -->
+            <div class="row mt-3">
+                <!-- Tab panes -->
                 @forelse ($categories as $category=>$category_data )
                 @if( $current_tab==$category)
                 @forelse ($category_data->paginated_announcements() as $announcement )
@@ -31,11 +31,13 @@
                 <div class="col-md-4">
                     <div class="card mt-3">
                         <div class="card-body">
-                            <h5 class="text-center text-capitalize">{{ $announcement->title }}</h5>
+                            <h5 class="text-center text-capitalize"> {{ Str::limit($announcement->title , 30, '...') }}
+                            </h5>
                             <ul class="list-group">
 
                                 <button class="btn btn-outline-primary mt-2"
-                                    wire:click.prevent="get_key_moments({{  $announcement->id}},{{ $announcement->id }})">Add  Key
+                                    wire:click.prevent="get_key_moments({{  $announcement->id}},{{ $announcement->id }})">Add
+                                    Key
                                     Moment(s)</button>
 
                             </ul>
@@ -72,29 +74,29 @@
 
                 </div>
 
-            <div class="row">
-                <div class="ml-2 mt-3 d-flex
+                <div class="row">
+                    <div class="ml-2 mt-3 d-flex
                     justify-content-end">
-                    {{-- kvngthr!v3 --}}
-                    {{ $category_data->paginated_announcements()
-                    ->links() }}
+                        {{-- kvngthr!v3 --}}
+                        {{ $category_data->paginated_announcements()
+                        ->links() }}
+                    </div>
                 </div>
+                @empty
+                <p>Data Currently Empty</p>
+                @endforelse
+
+
+
+                @endif
+
+
+                @empty
+                <p>No Data To Show!</p>
+                @endforelse
             </div>
-            @empty
-            <p>Data Currently Empty</p>
-            @endforelse
 
-
-
-            @endif
-
-
-        @empty
-        <p>No Data To Show!</p>
-        @endforelse
-    </div>
-
-</div>
+        </div>
 
 
         <!-- Modal 1-->
@@ -108,15 +110,16 @@
                         </h5>
                         <i style="font-size:20px" class="mdi mdi-close" type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></i>
-                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                         --}}
                     </div>
                     <div class="modal-body">
-                        {{--  @include('admin.layout.global-errors')  --}}
+                        @include('admin.layout.global-errors')
 
                         <h4>{{ $current_announcement_name }}</h4>
                         <hr>
-                        {{--  <div class="row">  --}}
+                        {{-- <div class="row"> --}}
                             <button class="btn btn-outline-primary w-100 "
                                 wire:click.prevent="add_announcement_keyMoment()">Add A New Key Moment</button>
 
@@ -128,54 +131,65 @@
                                 <div class="card">
                                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
                                         alt="...">
-                                              <hr>
-                                        <input type="file" wire:model.defer="announcement_key_moments.{{ $index }}.image"  class="form-control-file border border-primary rounded mt-1" id="image-upload">
-                                        <div class="invalid-feedback">
-                                            @error('announcement_key_moments.'. $index .'.image')
-                                            {{ $message }}
+                                    {{--  @if(is_object($announcement_key_moments.$index.image))
+                                    th
+                                    @endif  --}}
+                                    <hr>
+                                    {{--  <input type="file" wire:model.defer="announcement_key_moments.{{ $index }}.tmp_image"
+                                        class="form-control-file border border-primary rounded mt-1" id="image-upload">
+                                    <div class="invalid-feedback">
+                                        @error('announcement_key_moments.'. $index .'.tmp_image')
+                                        {{ $message }}
                                         @enderror </div>
 
-                                    <hr>
+                                    <hr>  --}}
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="subtitleInput">Announcement Subtitle</label>
 
 
-                                            <input type="text" wire:model.defer="announcement_key_moments.{{ $index }}.image_sub_title" class="form-control
+                                            <input type="text"
+                                                wire:model.defer="announcement_key_moments.{{ $index }}.image_sub_title"
+                                                class="form-control
                                             @error('announcement_key_moments.'. $index .'.image_sub_title') is-invalid @enderror
 
                                             " id="subtitleInput">
                                             <div class="invalid-feedback">
                                                 @error('announcement_key_moments.'. $index .'.image_sub_title')
                                                 {{ $message }}
-                                            @enderror </div>
-                                            </div>
+                                                @enderror </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="descriptionTextarea">Announcement Description</label>
                                             <textarea class="form-control
                                             @error('announcement_key_moments.'. $index .'.image_description') is-invalid @enderror
 
-                                            " id="descriptionTextarea" wire:model.defer="announcement_key_moments.{{ $index }}.image_description"  rows="3"></textarea>
+                                            " id="descriptionTextarea"
+                                                wire:model.defer="announcement_key_moments.{{ $index }}.image_description"
+                                                rows="3"></textarea>
                                             <div class="invalid-feedback">
                                                 @error('announcement_key_moments.'. $index .'.image_description')
                                                 {{ $message }}
-                                            @enderror </div>
+                                                @enderror </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <button class="btn btn-primary w-100 mt-3" wire:click.prevent='add_new_announcement'>Submit Key Moment(s)</button>
+
 
                             @empty
                             <p>No key moments for this announcement</p>
 
                             @endforelse
+                            <button class="btn btn-primary w-100 mt-3" wire:click='add_new_announcement()'>Submit
+                                Key Moment(s)</button>
 
                             @endif
 
-                        {{--  </div>  --}}
+                            {{--
+                        </div> --}}
 
 
 

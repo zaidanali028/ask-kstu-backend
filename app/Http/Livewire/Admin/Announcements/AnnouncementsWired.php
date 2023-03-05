@@ -18,7 +18,7 @@ class AnnouncementsWired extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-        'title' => 'required',
+        'title' => 'required|min:30',
         'category_id'=> 'required|numeric',
         'status' => 'required',
 

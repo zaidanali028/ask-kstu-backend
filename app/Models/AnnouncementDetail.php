@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnnouncementDetail extends Model
 {
-    protected $connection = "mysql";
-
     use HasFactory;
+    protected $appends=[
+        'tmp_image'
+    ];
+
+    public function getTmpImageAttribute(){
+        return [
+           'tmp_image'=>null
+        ];
+    }
+
+
 }
