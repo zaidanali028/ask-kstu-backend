@@ -126,23 +126,41 @@
                             @if(!empty($announcement_key_moments))
 
                             @forelse ($announcement_key_moments as $index=>$key_moment )
-
+                            @php $key_moment_img=$this->get_key_moment_attr($index) @endphp
+                            {{-- @json($key_moment_img) --}}
                             <div class="col-sm-12 mt-4">
                                 <div class="card">
+
+                                    @if(is_object($key_moment_img))
+                                    <button class="close" style=" right:50px;top:50px; 
+                                       position: absolute; ">
+                                        <span class="text-dark display-6
+                                            wire:click.prevent=" removeImg()">&times;</span>
+                                    </button>
+                                    <img src="{{ $key_moment_img->isPreviewable() ? $key_moment_img->temporaryUrl() : '/storage/err.png' }}"
+                                        class="card-img-top rounded" alt="...">
+                                    @elseif(is_string($key_moment->image))
+                                    <img src="{{ '/storage/' . $moment_img_path . '/' . $key_moment->image }}"
+                                        class="card-img-top rounded" alt="...">
+
+                                    @else
                                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
                                         alt="...">
-                                    {{--  @if(is_object($announcement_key_moments.$index.image))
-                                    th
-                                    @endif  --}}
+
+
+                                    @endif
                                     <hr>
-                                    {{--  <input type="file" wire:model.defer="announcement_key_moments.{{ $index }}.tmp_image"
-                                        class="form-control-file border border-primary rounded mt-1" id="image-upload">
+                                    <input type="file" wire:model.defer="temp_pic_{{ $index }}" class="form-control-file border border-primary rounded mt-1
+                                        @error('temp_pic_'. $index)
+                                        bg-danger
+                                        @enderror
+                                        " id="image-upload">
                                     <div class="invalid-feedback">
-                                        @error('announcement_key_moments.'. $index .'.tmp_image')
+                                        @error('temp_pic_'. $index)
                                         {{ $message }}
                                         @enderror </div>
 
-                                    <hr>  --}}
+                                    <hr>
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="subtitleInput">Announcement Subtitle</label>

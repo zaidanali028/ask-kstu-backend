@@ -24,7 +24,7 @@ $(document).ready(() => {
     })
 
      // close-modal events
-     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' },{ eventFromLiveWire: 'hide_add_announcement_modal',modalToHide:'add_announcement_modal' }]
+     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' },{ eventFromLiveWire: 'hide_add_announcement_modal',modalToHide:'add_announcement_modal' },{ eventFromLiveWire: 'hide_announcement_key_moments',modalToHide:'announcement_key_moments' }]
      closeModalEvents.forEach((event_) => {
          window.addEventListener(event_.eventFromLiveWire, e => {
              // alert('yoh!')
