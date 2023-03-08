@@ -22,49 +22,76 @@
 
         <div class="tab-content  ">
 
-            <div class="row mt-3">
+            <div class="row mt-3 mb-5">
                 <!-- Tab panes -->
                 @forelse ($categories as $category=>$category_data )
                 @if( $current_tab==$category)
                 @forelse ($category_data->paginated_announcements() as $announcement )
                 {{-- @json($category_data->paginated_announcements())) --}}
-                <div class="col-md-4">
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5 class="text-center text-capitalize"> {{ Str::limit($announcement->title , 30, '...') }}
-                            </h5>
-                            <ul class="list-group">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5 class="text-center text-capitalize d-flex justify-content-start"> {{
+                                        Str::limit($announcement->title , $limit,
+                                        '...') }}
+                                    </h5>
 
-                                <button class="btn btn-outline-primary mt-2"
-                                    wire:click.prevent="get_key_moments({{  $announcement->id}},{{ $announcement->id }})">Add
-                                    Key
-                                    Moment(s)</button>
+                                </div>
 
-                            </ul>
-                            {{-- <h5 class="card-title">Card 1</h5> --}}
-                            {{-- <p class="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p> --}}
+
+                            </div>
+
                         </div>
+                        <div class="col-md-3">
+                            <div class="card mt-3">
+                                <div class="card-body">
 
 
+
+                                    <button class="btn btn-outline-primary"
+                                        wire:click.prevent="get_key_moments({{  $announcement->id}},{{ $announcement->id }})">Add
+                                        Key
+                                        Moment(s)</button>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
+                    <hr>
+
                     <div class="card mt-1">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <i class="fas fa-thumbs-up"></i>
+                               <style>
+                                .font-gen{
+                                    font-size:20px;
+
+
+                                    }
+                               </style>
+                                <div class="col-md-4 d-flex justify-content-start">
+                                    <i class="fas fa-thumbs-up mr-2 text-success font-gen"></i>
                                     {{-- <span>Like</span> --}}
-                                    <span class="badge badge-pill badge-success">{{ $announcement->likes }}</span>
+                                    <span class="badge  w-25 h-100 b badge-pill badge-success font-gen">{{ $announcement->likes
+                                        }}</span>
                                 </div>
-                                <div class="col-md-4">
-                                    <i class="fas fa-eye"></i>
+                                <div class="col-md-4  d-flex justify-content-center">
+                                    <i class="fas fa-eye mr-2 text-primary font-gen"></i>
                                     {{-- <span>Views</span> --}}
-                                    <span class="badge badge-pill badge-primary">{{ $announcement->views }}</span>
+                                    <span class="badge w-25 h-100 badge-pill badge-primary font-gen">{{ $announcement->views
+                                        }}</span>
                                 </div>
-                                <div class="col-md-4">
-                                    <i class="fas fa-thumbs-down"></i>
+                                <div class="col-md-4  d-flex justify-content-end">
+                                    <i class="fas fa-thumbs-down mr-2 text-danger font-gen"></i>
                                     {{-- <span>Dislike</span> --}}
-                                    <span class="badge badge-pill badge-danger">{{ $announcement->dislikes }}</span>
+                                    <span class="badge badge-pill badge-danger w-25 h-100 font-gen">{{ $announcement->dislikes
+                                        }}</span>
                                 </div>
 
                             </div>
@@ -132,14 +159,19 @@
                                 <div class="card">
 
                                     @if(is_object($key_moment_img))
-                                    <button class="close" style=" right:50px;top:50px; 
+                                    <button class="close" style=" right:50px;top:30px;
                                        position: absolute; ">
-                                        <span class="text-dark display-6
-                                            wire:click.prevent=" removeImg()">&times;</span>
+                                        <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_temp({{ $index }})"
+                                           >&times;</span>
                                     </button>
                                     <img src="{{ $key_moment_img->isPreviewable() ? $key_moment_img->temporaryUrl() : '/storage/err.png' }}"
                                         class="card-img-top rounded" alt="...">
                                     @elseif(is_string($key_moment->image))
+                                    <button class="close" style=" right:50px;top:30px;
+                                       position: absolute; ">
+                                        <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_temp({{ $index }})"
+                                           >&times;</span>
+                                    </button>
                                     <img src="{{ '/storage/' . $moment_img_path . '/' . $key_moment->image }}"
                                         class="card-img-top rounded" alt="...">
 

@@ -11,6 +11,7 @@ class AnnouncementsWired extends Component
 {
     public $addNewAnnouncement;
     public $inputs = [];
+
     public $announcement_id;
     public $btn_text;
     protected $listeners = ['confirm_delete_announcement_alert'];

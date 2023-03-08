@@ -23,6 +23,7 @@ class AnnouncementDetailsWired extends Component
     public $announcement_key_moments;
 
     public $current_tab = 0;
+    public $limit = 200;
     public $current_announcement_name;
     public $current_announcement_id;
     public $counter = 0;
@@ -71,6 +72,8 @@ class AnnouncementDetailsWired extends Component
         $this->current_tab = $tab_id;
         // dd($this->current_tab);
     }
+
+    // method for writing images and returning just its name
     public function store_pic($media_file, $moment_file_name)
     {
         if (!empty($media_file)) {
@@ -78,14 +81,63 @@ class AnnouncementDetailsWired extends Component
             $new_file_name = 'key_moment' . "_" . $moment_file_name . "_." . $file_ext;
             $uploaded_img_path = public_path() . '\\storage\\' . $this->moment_img_path . '\\';
 
-            $img = Image::make($media_file);
+            $img = Image::make($media_file)->encode('png', 95);
 
-            $img->save($uploaded_img_path . $new_file_name);
+            $img->resize(300, 800)->save($uploaded_img_path . $new_file_name);
 
         }
         return $new_file_name;
 
     }
+
+    // method for removing uploaded images if not needee
+    public function remove_moment_img_temp($index)
+    {
+        switch ($index) {
+            case 0:
+                 $this->temp_pic_0="";
+                break;
+            case 1:
+                 $this->temp_pic_1="";
+                break;
+            case 2:
+                 $this->temp_pic_2="";
+                break;
+            case 3:
+                 $this->temp_pic_3="";
+                break;
+            case 4:
+                 $this->temp_pic_4="";
+                break;
+            case 5:
+                 $this->temp_pic_5="";
+                break;
+            case 6:
+                 $this->temp_pic_6="";
+                break;
+            case 7:
+                 $this->temp_pic_8="";
+                break;
+            case 8:
+                 $this->temp_pic_8="";
+                break;
+            case 9:
+                 $this->temp_pic_9="";
+                break;
+
+        }
+
+        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => " key moment image cleared  successfully!"]);
+
+    }
+
+    // remove a db image for key moment
+    public function remove_moment_perm($image_name){
+        dd($image_name);
+        // this is not working
+
+    }
+
     public function get_key_moments($announcement_id)
     {
         // dd($announcement_id);
@@ -164,22 +216,22 @@ class AnnouncementDetailsWired extends Component
                 return $this->temp_pic_3;
                 break;
             case 4:
-                $this->image_file = $this->temp_pic_4;
+                return $this->temp_pic_4;
                 break;
             case 5:
-                $this->image_file = $this->temp_pic_5;
+                return $this->temp_pic_5;
                 break;
             case 6:
-                $this->image_file = $this->temp_pic_6;
+                return $this->temp_pic_6;
                 break;
             case 7:
-                $this->image_file = $this->temp_pic_8;
+                return $this->temp_pic_8;
                 break;
             case 8:
-                $this->image_file = $this->temp_pic_8;
+                return $this->temp_pic_8;
                 break;
             case 9:
-                $this->image_file = $this->temp_pic_9;
+                return $this->temp_pic_9;
                 break;
 
         }
@@ -208,9 +260,8 @@ class AnnouncementDetailsWired extends Component
             $key_moment->save();
         }
 
-
-        $this->dispatchBrowserEvent('hide_announcement_key_moments',);
-        $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>"[".$this->current_announcement_name."]"." key moments updated successfully!"]);
+        $this->dispatchBrowserEvent('hide_announcement_key_moments', );
+        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "[" . $this->current_announcement_name . "]" . " key moments updated successfully!"]);
 
     }
 
