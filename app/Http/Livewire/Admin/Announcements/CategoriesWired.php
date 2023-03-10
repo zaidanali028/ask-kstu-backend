@@ -65,6 +65,9 @@ class CategoriesWired extends Component
 
     }
     public function confirm_delete_category_alert(){
+        // dd(CategoryModel::with(['get_category_announcements'])->get()->toArray());
+        dd(CategoryModel::with(['get_category_announcements'])->get()->all());
+
         CategoryModel::findOrFail($this->category_id)->delete();
         $this->dispatchBrowserEvent('show-success-toast',["success_msg"=>' Category Deleted Successfully']);
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+             $table->string('featured_image');
             $table->string('title');
             $table->integer('status');
             $table->bigInteger('views')->default(0);
@@ -23,11 +24,11 @@ return new class extends Migration
         });
     }
 
-    public function get_announcement_category()
-{
-return $this->belongsTo('App\Models\Categories','category_id','id');
+//     public function get_announcement_category()
+// {
+// return $this->belongsTo('App\Models\Categories','category_id','id');
 
-}
+// }
 
     /**
      * Reverse the migrations.

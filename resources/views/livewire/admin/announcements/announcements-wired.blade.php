@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-body">
 
-   @include('admin.layout.global-errors')
+   {{--  @include('admin.layout.global-errors')  --}}
 
 
 
@@ -160,6 +160,43 @@
                             @error('category_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Announcement Featured Image </label>
+
+                            <input type="file"  id="img_file" wire:model.defer="inputs.featured_image" class="
+                            @error('featured_image')
+                            bg-danger
+                            @enderror
+                            form-control-file border border-primary rounded mb-4"/>
+                            @error('featured_image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            @if(!empty($inputs['featured_image']) &&is_object($inputs['featured_image']))
+                            <button class="close" style=" right:20px;top:230px;
+                               position: absolute; ">
+                                <span class="text-dark display-6"  wire:click.prevent="clear_temp_img()"
+                                   >&times;</span>
+                            </button>
+                            <img src="{{ $inputs['featured_image']->isPreviewable() ? $inputs['featured_image']->temporaryUrl() : '/storage/err.png' }}"
+                                class="card-img-top rounded" alt="...">
+                            @elseif(!empty($inputs['featured_image']) &&is_string($inputs['featured_image']))
+                            <button class="close" style=" right:30px;top:230px;
+                               position: absolute; ">
+                                <span class="text-dark display-6"  wire:click.prevent="clear_db_img()"
+                                   >&times;</span>
+                            </button>
+                            <img src="{{ '/storage/' . $announcement_images . '/' .$inputs['featured_image'] }}"
+                                class="card-img-top rounded" alt="...">
+
+                            @else
+                            <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
+                                alt="...">
+
+
+                            @endif
+
                         </div>
                         <div class="ml-1 form-group row">
                             @error('status')

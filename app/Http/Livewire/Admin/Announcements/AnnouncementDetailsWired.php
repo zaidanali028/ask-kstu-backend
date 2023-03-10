@@ -5,11 +5,14 @@ namespace App\Http\Livewire\Admin\Announcements;
 use App\Models\Announcement as AnnouncementModel;
 use App\Models\AnnouncementDetail as AnnouncementDetailModel;
 use App\Models\Category as CategoryModel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\File;
+
 
 class AnnouncementDetailsWired extends Component
 {
@@ -20,16 +23,20 @@ class AnnouncementDetailsWired extends Component
     protected $paginationTheme = 'bootstrap';
     public $moment_img_path = 'moment_imgs';
 
+
     public $announcement_key_moments;
 
     public $current_tab = 0;
     public $limit = 200;
     public $current_announcement_name;
     public $current_announcement_id;
+    public $current_keyMoment_toDelete;
+    public $current_keyMoment_index;
     public $counter = 0;
     public $image_file;
 
     public $max_key_moments = 10;
+    protected $listeners=['confirm_delete_key_moment'];
     // max_key_moments is needed so as to know control the amount of temp_pic variables to declare for the key moments
 
     public $temp_pic_0, $temp_pic_1, $temp_pic_2, $temp_pic_3, $temp_pic_4, $temp_pic_5, $temp_pic_6, $temp_pic_7, $temp_pic_8, $temp_pic_9;
@@ -76,14 +83,19 @@ class AnnouncementDetailsWired extends Component
     // method for writing images and returning just its name
     public function store_pic($media_file, $moment_file_name)
     {
+        $uploaded_img_path = public_path() . '\\storage\\' . $this->moment_img_path . '\\';
+
+        if(!File::exists($uploaded_img_path)){
+            // checking if path to this image file exsists and creating a foldeer for it if it doesnt exsist
+            File::makeDirectory($uploaded_img_path);
+        }
+
         if (!empty($media_file)) {
             $file_ext = $media_file->getClientOriginalExtension();
             $new_file_name = 'key_moment' . "_" . $moment_file_name . "_." . $file_ext;
-            $uploaded_img_path = public_path() . '\\storage\\' . $this->moment_img_path . '\\';
 
-            $img = Image::make($media_file)->encode('png', 95);
-
-            $img->resize(300, 800)->save($uploaded_img_path . $new_file_name);
+            $img = Image::make($media_file);
+            $img->save($uploaded_img_path . $new_file_name);
 
         }
         return $new_file_name;
@@ -95,54 +107,100 @@ class AnnouncementDetailsWired extends Component
     {
         switch ($index) {
             case 0:
-                 $this->temp_pic_0="";
+                $this->temp_pic_0 = "";
                 break;
             case 1:
-                 $this->temp_pic_1="";
+                $this->temp_pic_1 = "";
                 break;
             case 2:
-                 $this->temp_pic_2="";
+                $this->temp_pic_2 = "";
                 break;
             case 3:
-                 $this->temp_pic_3="";
+                $this->temp_pic_3 = "";
                 break;
             case 4:
-                 $this->temp_pic_4="";
+                $this->temp_pic_4 = "";
                 break;
             case 5:
-                 $this->temp_pic_5="";
+                $this->temp_pic_5 = "";
                 break;
             case 6:
-                 $this->temp_pic_6="";
+                $this->temp_pic_6 = "";
                 break;
             case 7:
-                 $this->temp_pic_8="";
+                $this->temp_pic_8 = "";
                 break;
             case 8:
-                 $this->temp_pic_8="";
+                $this->temp_pic_8 = "";
                 break;
             case 9:
-                 $this->temp_pic_9="";
+                $this->temp_pic_9 = "";
                 break;
 
         }
 
-        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => " key moment image cleared  successfully!"]);
-
     }
 
     // remove a db image for key moment
-    public function remove_moment_perm($image_name){
-        dd($image_name);
-        // this is not working
+    public function remove_moment_img_perm($key_moment_id, $index, $show_msg = true)
+    {
+        //removes temporary image for this key moment if it exsists
+        $this->remove_moment_img_temp($index);
+
+        $img_obj = AnnouncementDetailModel::findOrFail($key_moment_id);
+        AnnouncementDetailModel::where('id', $key_moment_id)->update(["image" => ""]);
+
+        Storage::disk('public')->delete($this->moment_img_path . '/' . $img_obj->image);
+
+        if ($show_msg == true) {
+            $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "key moment image removed successfully!"]);
+
+        }
+
+    }
+    public function remove_key_moment($index, $key_moment){
+        $this->current_keyMoment_toDelete=$key_moment;
+        $this->current_keyMoment_index=$index;
+        $this->dispatchBrowserEvent('show_delete_key_moment');
+
+
+    }
+
+    public function confirm_delete_key_moment()
+    {
+
+        if (!empty($this->array_to_object( $this->current_keyMoment_toDelete)->image)) {
+            //if this keymoment has an image, I am deleting it before proceeding...
+
+            $moment_id = $this->array_to_object( $this->current_keyMoment_toDelete)->id;
+            $this->remove_moment_img_perm($moment_id, $this->current_keyMoment_index, false);
+
+        }
+        $announcement_key_moment = $this->announcement_key_moments[$this->current_keyMoment_index];
+        $announcement_key_moment->delete();
+        $this->announcement_key_moments->forget($this->current_keyMoment_index);
+        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "key moment deleted successfully!"]);
+
+
+
+
+    }
+    private function array_to_object($array)
+    {
+        return (object) $array;
 
     }
 
     public function get_key_moments($announcement_id)
     {
-        // dd($announcement_id);
 
-        $this->announcement_key_moments = AnnouncementDetailModel::all()->where('announcement_id', $announcement_id);
+        $this->announcement_key_moments = AnnouncementDetailModel::all()
+        ->where('announcement_id', $announcement_id);
+
+        dd($this->announcement_key_moments->toArra());
+        // this works in a controller but not in blade
+
+
 
         $this->current_announcement_id = $announcement_id;
         $this->current_announcement_name = AnnouncementModel::where(['id' => $this->current_announcement_id])->first()->title;
@@ -239,6 +297,8 @@ class AnnouncementDetailsWired extends Component
     }
     public function add_new_announcement()
     {
+        //dd($this->announcement_key_moments->toArray()!=[]);
+
 
         $this->validate($this->rules, $this->messages);
 
@@ -249,7 +309,7 @@ class AnnouncementDetailsWired extends Component
 
             $microtime = microtime(true);
 
-            $random_name = Str::random() . '-' . (string) $microtime;
+            $random_name = Str::random(5) . '-' . (string) $microtime;
 
             $key_moment->announcement_id = $this->current_announcement_id;
             if (!empty($this->image_file)) {
@@ -258,6 +318,14 @@ class AnnouncementDetailsWired extends Component
             }
 
             $key_moment->save();
+
+            // clear input fields after upload
+            $this->dispatchBrowserEvent('clear_file_fields');
+        }
+
+        // deleting all 10 temp images counting from 0 to 9 with the count serving as indexes
+        for ($i = 0; $i < 10; $i++) {
+            $this->remove_moment_img_temp($i);
         }
 
         $this->dispatchBrowserEvent('hide_announcement_key_moments', );

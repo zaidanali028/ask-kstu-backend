@@ -26,7 +26,7 @@
                 <!-- Tab panes -->
                 @forelse ($categories as $category=>$category_data )
                 @if( $current_tab==$category)
-                @forelse ($category_data->paginated_announcements() as $announcement )
+                @forelse ($category_data->paginated_announcements() as $index=>$announcement )
                 {{-- @json($category_data->paginated_announcements())) --}}
                 <div class="col-md-12">
                     <div class="row">
@@ -51,7 +51,7 @@
 
 
                                     <button class="btn btn-outline-primary"
-                                        wire:click.prevent="get_key_moments({{  $announcement->id}},{{ $announcement->id }})">Add
+                                        wire:click.prevent="get_key_moments({{  $announcement->id}})">Add
                                         Key
                                         Moment(s)</button>
 
@@ -63,7 +63,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
 
                     <div class="card mt-1">
                         <div class="card-body">
@@ -98,8 +97,10 @@
                         </div>
 
                     </div>
+                    <hr>
 
                 </div>
+
 
                 <div class="row">
                     <div class="ml-2 mt-3 d-flex
@@ -150,7 +151,8 @@
                             <button class="btn btn-outline-primary w-100 "
                                 wire:click.prevent="add_announcement_keyMoment()">Add A New Key Moment</button>
 
-                            @if(!empty($announcement_key_moments))
+                            @if($announcement_key_moments)
+                            {{--  checking if array is not empty  --}}
 
                             @forelse ($announcement_key_moments as $index=>$key_moment )
                             @php $key_moment_img=$this->get_key_moment_attr($index) @endphp
@@ -158,39 +160,41 @@
                             <div class="col-sm-12 mt-4">
                                 <div class="card">
 
-                                    @if(is_object($key_moment_img))
-                                    <button class="close" style=" right:50px;top:30px;
-                                       position: absolute; ">
-                                        <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_temp({{ $index }})"
-                                           >&times;</span>
-                                    </button>
-                                    <img src="{{ $key_moment_img->isPreviewable() ? $key_moment_img->temporaryUrl() : '/storage/err.png' }}"
-                                        class="card-img-top rounded" alt="...">
-                                    @elseif(is_string($key_moment->image))
-                                    <button class="close" style=" right:50px;top:30px;
-                                       position: absolute; ">
-                                        <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_temp({{ $index }})"
-                                           >&times;</span>
-                                    </button>
-                                    <img src="{{ '/storage/' . $moment_img_path . '/' . $key_moment->image }}"
-                                        class="card-img-top rounded" alt="...">
 
-                                    @else
-                                    <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
-                                        alt="...">
-
-
-                                    @endif
                                     <hr>
-                                    <input type="file" wire:model.defer="temp_pic_{{ $index }}" class="form-control-file border border-primary rounded mt-1
+                                    <input type="file"  id="img_file" wire:model.defer="temp_pic_{{ $index }}" class="form-control-file border border-primary rounded mb-4
                                         @error('temp_pic_'. $index)
                                         bg-danger
                                         @enderror
-                                        " id="image-upload">
+                                        " />
                                     <div class="invalid-feedback">
                                         @error('temp_pic_'. $index)
                                         {{ $message }}
                                         @enderror </div>
+
+                                        @if(is_object($key_moment_img))
+                                        <button class="close" style=" right:50px;top:30px;
+                                           position: absolute; ">
+                                            <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_temp({{ $index }})"
+                                               >&times;</span>
+                                        </button>
+                                        <img src="{{ $key_moment_img->isPreviewable() ? $key_moment_img->temporaryUrl() : '/storage/err.png' }}"
+                                            class="card-img-top rounded" alt="...">
+                                        @elseif(!empty($key_moment->image) &&is_string($key_moment->image))
+                                        <button class="close" style=" right:50px;top:30px;
+                                           position: absolute; ">
+                                            <span class="text-dark display-6"  wire:click.prevent="remove_moment_img_perm({{ $key_moment->id}} ,{{ $index}})"
+                                               >&times;</span>
+                                        </button>
+                                        <img src="{{ '/storage/' . $moment_img_path . '/' . $key_moment->image }}"
+                                            class="card-img-top rounded" alt="...">
+
+                                        @else
+                                        <img src="https://via.placeholder.com/300x200" class="card-img-top rounded"
+                                            alt="...">
+
+
+                                        @endif
 
                                     <hr>
                                     <div class="card-body">
@@ -221,6 +225,9 @@
                                                 @error('announcement_key_moments.'. $index .'.image_description')
                                                 {{ $message }}
                                                 @enderror </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="btn btn-danger w-100" wire:click.prevent="remove_key_moment({{ $index }},{{ $key_moment }})">Remove this key moment</div>
                                         </div>
                                     </div>
                                 </div>

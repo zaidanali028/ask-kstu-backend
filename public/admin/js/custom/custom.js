@@ -36,7 +36,7 @@ $(document).ready(() => {
      })
 
     //delete events sweet-alerts
-    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'},{eventFromLiveWire:'show_delete_announcement_alert',eventToLiveWire:'confirm_delete_announcement_alert'}]
+    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'},{eventFromLiveWire:'show_delete_announcement_alert',eventToLiveWire:'confirm_delete_announcement_alert'},{eventFromLiveWire:'show_delete_key_moment',eventToLiveWire:'confirm_delete_key_moment'}]
     deleteEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
             Swal.fire({
@@ -47,6 +47,7 @@ $(document).ready(() => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
+                
             }).then((result) => {
                 if (result.isConfirmed) {
                     // telling livewire user has clicked on confimation to delete
@@ -60,6 +61,11 @@ $(document).ready(() => {
 
 
 
+    window.addEventListener('clear_file_fields', e => {
+        let imagefile = $('#img_file').val('').clone(true);
+
+
+    })
 
     // toastr-config
     toastr.options = {
