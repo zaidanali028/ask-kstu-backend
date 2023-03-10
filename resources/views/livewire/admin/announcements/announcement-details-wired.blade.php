@@ -134,7 +134,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
 
-                        <h5 class="modal-title" id="announcement_key_moments">CATEGORY MANAGEMENT
+                        <h5 class="modal-title" id="announcement_key_moments">ANNOUNCEMENT DETAIL MANAGEMENT
                         </h5>
                         <i style="font-size:20px" class="mdi mdi-close" type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></i>

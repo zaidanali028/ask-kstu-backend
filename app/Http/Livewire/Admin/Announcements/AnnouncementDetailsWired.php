@@ -5,14 +5,13 @@ namespace App\Http\Livewire\Admin\Announcements;
 use App\Models\Announcement as AnnouncementModel;
 use App\Models\AnnouncementDetail as AnnouncementDetailModel;
 use App\Models\Category as CategoryModel;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\File;
-
 
 class AnnouncementDetailsWired extends Component
 {
@@ -22,7 +21,6 @@ class AnnouncementDetailsWired extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $moment_img_path = 'moment_imgs';
-
 
     public $announcement_key_moments;
 
@@ -36,7 +34,7 @@ class AnnouncementDetailsWired extends Component
     public $image_file;
 
     public $max_key_moments = 10;
-    protected $listeners=['confirm_delete_key_moment'];
+    protected $listeners = ['confirm_delete_key_moment'];
     // max_key_moments is needed so as to know control the amount of temp_pic variables to declare for the key moments
 
     public $temp_pic_0, $temp_pic_1, $temp_pic_2, $temp_pic_3, $temp_pic_4, $temp_pic_5, $temp_pic_6, $temp_pic_7, $temp_pic_8, $temp_pic_9;
@@ -85,7 +83,7 @@ class AnnouncementDetailsWired extends Component
     {
         $uploaded_img_path = public_path() . '\\storage\\' . $this->moment_img_path . '\\';
 
-        if(!File::exists($uploaded_img_path)){
+        if (!File::exists($uploaded_img_path)) {
             // checking if path to this image file exsists and creating a foldeer for it if it doesnt exsist
             File::makeDirectory($uploaded_img_path);
         }
@@ -158,21 +156,21 @@ class AnnouncementDetailsWired extends Component
         }
 
     }
-    public function remove_key_moment($index, $key_moment){
-        $this->current_keyMoment_toDelete=$key_moment;
-        $this->current_keyMoment_index=$index;
+    public function remove_key_moment($index, $key_moment)
+    {
+        $this->current_keyMoment_toDelete = $key_moment;
+        $this->current_keyMoment_index = $index;
         $this->dispatchBrowserEvent('show_delete_key_moment');
-
 
     }
 
     public function confirm_delete_key_moment()
     {
 
-        if (!empty($this->array_to_object( $this->current_keyMoment_toDelete)->image)) {
+        if (!empty($this->array_to_object($this->current_keyMoment_toDelete)->image)) {
             //if this keymoment has an image, I am deleting it before proceeding...
 
-            $moment_id = $this->array_to_object( $this->current_keyMoment_toDelete)->id;
+            $moment_id = $this->array_to_object($this->current_keyMoment_toDelete)->id;
             $this->remove_moment_img_perm($moment_id, $this->current_keyMoment_index, false);
 
         }
@@ -180,9 +178,6 @@ class AnnouncementDetailsWired extends Component
         $announcement_key_moment->delete();
         $this->announcement_key_moments->forget($this->current_keyMoment_index);
         $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "key moment deleted successfully!"]);
-
-
-
 
     }
     private function array_to_object($array)
@@ -195,12 +190,10 @@ class AnnouncementDetailsWired extends Component
     {
 
         $this->announcement_key_moments = AnnouncementDetailModel::all()
-        ->where('announcement_id', $announcement_id);
+            ->where('announcement_id', $announcement_id);
 
-        dd($this->announcement_key_moments->toArra());
+        // dd($this->announcement_key_moments->toArray());
         // this works in a controller but not in blade
-
-
 
         $this->current_announcement_id = $announcement_id;
         $this->current_announcement_name = AnnouncementModel::where(['id' => $this->current_announcement_id])->first()->title;
@@ -297,8 +290,8 @@ class AnnouncementDetailsWired extends Component
     }
     public function add_new_announcement()
     {
-        //dd($this->announcement_key_moments->toArray()!=[]);
 
+        //dd($this->announcement_key_moments->toArray()!=[]);
 
         $this->validate($this->rules, $this->messages);
 
@@ -312,7 +305,16 @@ class AnnouncementDetailsWired extends Component
             $random_name = Str::random(5) . '-' . (string) $microtime;
 
             $key_moment->announcement_id = $this->current_announcement_id;
+
             if (!empty($this->image_file)) {
+                // user trying to upload new key moment image
+                
+                if (!empty($key_moment->image) && is_string($key_moment->image)) {
+                    // old image_name is in db
+                    Storage::disk('public')->delete($this->moment_img_path . '/' . $key_moment->image);
+                    // deleting old one if you  wana add a new one
+
+                }
                 // set_key_moment_attr() is set so we can use it now if its not empty
                 $key_moment->image = $this->store_pic($this->image_file, $random_name);
             }

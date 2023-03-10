@@ -5,14 +5,13 @@ namespace App\Http\Livewire\Admin\Announcements;
 use App\Models\Announcement as AnnouncementModel;
 use App\Models\AnnouncementDetail as AnnouncementDetailModel;
 use App\Models\Category as CategoryModel;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
-
 
 class AnnouncementsWired extends Component
 {
@@ -24,7 +23,7 @@ class AnnouncementsWired extends Component
 
     public $announcement_id;
     public $btn_text;
-    protected $listeners = ['confirm_delete_announcement_alert'];
+    protected $listeners = ['confirm_delete_announcement_alert', 'confirm_announcement_img_delete'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -66,14 +65,7 @@ class AnnouncementsWired extends Component
         $this->dispatchBrowserEvent('show_delete_announcement_alert');
 
     }
-    public function update_announcement()
-    {
-        $validated_data = Validator::make($this->inputs, $this->rules)->validate();
-        AnnouncementModel::where(['id' => $this->announcement_id])->update($validated_data);
-        $this->dispatchBrowserEvent('hide_add_announcement_modal');
-        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => ' announcement Updated Successfully']);
 
-    }
     public function confirm_delete_announcement_alert()
     {
         $announcement = AnnouncementModel::with(['get_announcement_key_moments'])->where(['id' => $this->announcement_id])->first();
@@ -111,6 +103,11 @@ class AnnouncementsWired extends Component
         return (object) $array;
 
     }
+    private function object_to_array($object)
+    {
+        return (array) $object;
+
+    }
     // method for writing images and returning just its name
 
     public function store_pic($media_file, $file_name = null)
@@ -118,26 +115,17 @@ class AnnouncementsWired extends Component
         $microtime = microtime(true);
         $uploaded_img_path = public_path() . '\\storage\\' . $this->announcement_images . '\\';
 
-
-        $file_name =$file_name?? Str::random(5) . '-' . (string) $microtime;
+        $file_name = $file_name ?? Str::random(5) . '-' . (string) $microtime;
         // generated a random file  for image to be uploaded
 
-
-        if(!File::exists($uploaded_img_path)){
+        if (!File::exists($uploaded_img_path)) {
             // checking if path to this image file exsists and creating a foldeer for it if it doesnt exsist
             File::makeDirectory($uploaded_img_path);
         }
 
-
-
-
-
-
         if (!empty($media_file)) {
             $file_ext = $media_file->getClientOriginalExtension();
             $new_file_name = 'announcement_img' . "_" . $file_name . "_." . $file_ext;
-            // dd($file_name);
-
 
             $img = Image::make($media_file);
             $img->save($uploaded_img_path . $new_file_name);
@@ -146,10 +134,63 @@ class AnnouncementsWired extends Component
         return $new_file_name;
 
     }
-    public function clear_temp_img(){
-        $this->inputs['featured_image']="";
+    public function clear_temp_img()
+    {
+        $this->inputs['featured_image'] = "";
     }
+    public function clear_db_img($announcement_id)
+    {
+        $this->announcement_id = $announcement_id;
+        $this->dispatchBrowserEvent('announcement_img_delete');
 
+    }
+    public function confirm_announcement_img_delete($show_msg = true)
+    {
+        $img_obj = AnnouncementModel::findOrFail($this->announcement_id);
+        AnnouncementModel::where('id', $this->announcement_id)->update(["featured_image" => ""]);
+
+        Storage::disk('public')->delete($this->announcement_images . '/' . $img_obj->featured_image);
+
+        if ($show_msg == true) {
+            $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "featured  image removed successfully!"]);
+
+        }
+        $this->dispatchBrowserEvent('hide_add_announcement_modal');
+
+    }
+    public function update_announcement()
+    {
+            $announcement = AnnouncementModel::where(['id' => $this->announcement_id])->first();
+
+        if(!empty($announcement->featured_image) && is_string($announcement->featured_image)){
+            $this->rules['featured_image']='';
+
+
+        }
+        $validated_data = Validator::make($this->inputs, $this->rules)->validate();
+        $validated_data = $this->array_to_object($validated_data);
+        if (is_object($validated_data->featured_image)) {
+            //new  image is set
+
+            //  check and delete old announcement image before adding new one
+            $featured_image = $announcement->featured_image;
+            if (!empty($featured_image)) {
+                Storage::disk('public')->delete($this->announcement_images . '/' . $announcement->featured_image);
+
+            }
+
+            $validated_data->featured_image = $this->store_pic($validated_data->featured_image);
+
+        }
+
+        AnnouncementModel::where(['id' => $this->announcement_id])->update($this->object_to_array($validated_data));
+        $this->dispatchBrowserEvent('hide_add_announcement_modal');
+        $this->dispatchBrowserEvent('clear_file_fields');
+        $this->inputs=[];
+
+        $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => ' announcement Updated Successfully']);
+
+    }
     public function submit_add_new_announcement()
     {
 
@@ -169,6 +210,9 @@ class AnnouncementsWired extends Component
         $announcement->status = $this->array_to_object($this->inputs)->status;
         $announcement->save();
         $this->addNewAnnouncement = false;
+        $this->dispatchBrowserEvent('clear_file_fields');
+        $this->inputs=[];
+
 
         redirect()->back();
         $this->dispatchBrowserEvent('hide_add_announcement_modal');

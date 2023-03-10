@@ -184,7 +184,7 @@
                             @elseif(!empty($inputs['featured_image']) &&is_string($inputs['featured_image']))
                             <button class="close" style=" right:30px;top:230px;
                                position: absolute; ">
-                                <span class="text-dark display-6"  wire:click.prevent="clear_db_img()"
+                                <span class="text-dark display-6"  wire:click.prevent="clear_db_img({{ $inputs['id'] }})"
                                    >&times;</span>
                             </button>
                             <img src="{{ '/storage/' . $announcement_images . '/' .$inputs['featured_image'] }}"
