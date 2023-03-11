@@ -47,9 +47,21 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // ensure the client is an authernticated admin
     Route::get('dashboard', 'adminController@dashboard');
     Route::get('logout', 'adminController@logout');
-    Route::get('categories', 'adminController@categories');
-    Route::get('anouncements', 'adminController@anouncements');
-    Route::get('announcement-details', 'adminController@announcement_details');
+
+    // announcement utilities
+    Route::get('/announcement-util/categories', 'adminController@categories');
+    Route::get('/announcement-util/anouncements', 'adminController@anouncements');
+    Route::get('/announcement-util/announcement-details', 'adminController@announcement_details');
+
+
+    //faculty utilities
+    Route::get('/school-util/faculties', 'adminController@faculties');
+    Route::get('/school-util/programs', 'adminController@programs');
+    Route::get('/school-util/departments', 'adminController@departments');
+
+
+
+
 
 
 

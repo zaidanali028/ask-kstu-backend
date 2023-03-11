@@ -148,7 +148,10 @@ class AnnouncementDetailsWired extends Component
         $img_obj = AnnouncementDetailModel::findOrFail($key_moment_id);
         AnnouncementDetailModel::where('id', $key_moment_id)->update(["image" => ""]);
 
-        Storage::disk('public')->delete($this->moment_img_path . '/' . $img_obj->image);
+        if (!empty($img_obj->image)) {
+
+            Storage::disk('public')->delete($this->moment_img_path . '/' . $img_obj->image);
+        }
 
         if ($show_msg == true) {
             $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => "key moment image removed successfully!"]);
@@ -207,7 +210,17 @@ class AnnouncementDetailsWired extends Component
             $announcement_instance = AnnouncementDetailModel::make();
             $this->announcement_key_moments->push($announcement_instance);
 
+        } else {
+            $this->dispatchBrowserEvent('show-error-toast', ["error_msg" => "New Field Cannot Be Added As Limit Is Ten(10) Key Moments!"]);
+
         }
+
+    }
+
+    public function hide_modal()
+    {
+
+        $this->dispatchBrowserEvent('hide_announcement_key_moments');
 
     }
 
@@ -308,7 +321,7 @@ class AnnouncementDetailsWired extends Component
 
             if (!empty($this->image_file)) {
                 // user trying to upload new key moment image
-                
+
                 if (!empty($key_moment->image) && is_string($key_moment->image)) {
                     // old image_name is in db
                     Storage::disk('public')->delete($this->moment_img_path . '/' . $key_moment->image);

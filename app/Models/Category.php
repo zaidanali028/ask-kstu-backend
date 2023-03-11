@@ -19,7 +19,7 @@ class Category extends Model
 
     public function get_category_announcements(){
         return $this->hasMany('App\Models\Announcement',
-        'category_id','id')->with(['get_announcement_key_moments'])->latest();
+        'category_id','id')->latest();
 
     }
 

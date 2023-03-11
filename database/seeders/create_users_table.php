@@ -30,14 +30,15 @@ class create_users_table extends Seeder
              "status"=>1,
              "yr_of_admission"=>"2018",
              "yr_of_completion"=>"2022"
-             
 
-            
-           
-       
+
+
+
+
 
         ]
         ];
+        
 
         User::insert($user_record);
 

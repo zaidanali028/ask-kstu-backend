@@ -14,18 +14,21 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             // students table
             $table->id();
-            
+
 
 
 
             $table->string('name');
             $table->string('email')->unique();
-           
+
             // admin_type can be(dean,pro,student,admin-admin can register students)
             $table->string('password');
             $table->string('gender');
             $table->string('user_img', )->nullable();
             $table->bigInteger('index_no')->nullable();
+            $table->string('current_level');
+            $table->string('current_sem')->default('First Semester');
+
 
             $table->integer('faculty_id');
             $table->integer('dept_id');

@@ -5,19 +5,19 @@
         <x-spinner />
 
         <div class="col-lg-12 grid-margin stretch-card">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title">Announcement Categories</h4>
+                    <h4 class="card-title">Faculties Main</h4>
                     <div class="row card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="m-0 font-weight-bold text-primary">Category List</h2>
+                        <h2 class="m-0 font-weight-bold text-primary">Faculty List</h2>
 
-                        {{-- <button wire:click="new_category()" class="btn btn-primary mr-2"> Submit</button> --}}
+                        {{-- <button wire:click="new_faculty()" class="btn btn-primary mr-2"> Submit</button> --}}
 
-                        <a wire:click.prevent="new_category()" class="btn btn-primary float-right"
-                            style="margin-top: 6px; margin-right: 6px;">Add Category</a>
+                        <a wire:click.prevent="new_faculty()" class="btn btn-primary float-right"
+                            style="margin-top: 6px; margin-right: 6px;">Add Faculty</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped ">
                             <thead>
                                 <tr>
                                     <th>
@@ -36,29 +36,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{--  @json($categories)  --}}
-                                @if (!empty($categories))
-                                @foreach ($categories as $category )
+                                {{--  @json($faculties)  --}}
+                                @if (!empty($faculties))
+                                @foreach ($faculties as $faculty )
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $faculty->id }}</td>
+                                    <td>{{ $faculty->name }}</td>
                                     <td>
                                         @php
-                                        $status_toggle_icon = $category->status == 1 ? 'mdi-toggle-switch text-primary'
+                                        $status_toggle_icon = $faculty->status == 1 ? 'mdi-toggle-switch text-primary'
                                         : 'mdi-toggle-switch-off';
                                         @endphp
-                                        <i wire:click="change_category_status({{ $category->id }},{{ $category->status }})"
+                                        <i wire:click="change_faculty_status({{ $faculty->id }},{{ $faculty->status }})"
                                             style="font-size: 30px" class="mdi {{ $status_toggle_icon }}"></i>
 
                                     </td>
                                     <td>
-                                        <a wire:click.prevent="edit_category({{ $category->id }})" style="font-size: 20px"
+                                        <a wire:click.prevent="edit_faculty({{ $faculty->id }})" style="font-size: 20px"
                                             class=" mdi mdi-pencil-box-outline"></a>
 
 
 
                                         <a style="font-size: 20px" class="mdi mdi-close-box-outline"
-                                            wire:click.prevent="delete_category({{ $category->id }})"></a>
+                                            wire:click.prevent="delete_faculty({{ $faculty->id }})"></a>
                                     </td>
 
                                 </tr>
@@ -72,7 +72,7 @@
 
                         </table>
                         <div class="mt-3 d-flex justify-content-end">
-                            {{ $categories->links() }}
+                            {{ $faculties->links() }}
                         </div>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
 
 
     <!-- Modal 1-->
-    <div wire:ignore.self class="modal fade" id="add_category_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div wire:ignore.self class="modal fade" id="add_faculty_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="add_category_modal">CATEGORY MANAGEMENT
+                <h5 class="modal-title" id="add_faculty_modal">Faculty MANAGEMENT
                 </h5>
                 <i style="font-size:20px" wire:click.prevent="hide_modal" class="mdi mdi-close" type="button" class="btn-close"
                     data-bs-dismiss="modal" aria-label="Close"></i>
@@ -98,14 +98,14 @@
             <div class="modal-body">
    @include('admin.layout.global-errors')
 
-                <form  wire:submit.prevent={{ $addNewCategory ? 'submit_add_new_category' : 'update_category ' }} method="POST" >
+                <form  wire:submit.prevent={{ $addNewfaculty ? 'submit_add_new_faculty' : 'update_faculty ' }} method="POST" >
 
                     <div class="form-group">
-                        <label>Category Name </label>
+                        <label>Faculty Name </label>
                         <input type="text" wire:model.defer="inputs.name"
                             class="form-control form-control-lg
                             @error('name') is-invalid @enderror"
-                             placeholder="Academic Informaion" aria-label="Username">
+                             placeholder="Faculty Of Applied Sciences" aria-label="Username">
                             @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

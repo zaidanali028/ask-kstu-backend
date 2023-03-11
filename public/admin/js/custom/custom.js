@@ -6,12 +6,21 @@ $(document).ready(() => {
         toastr.success(e.detail.success_msg, 'Success')
 
     });
+    window.addEventListener('show-error-toast', e => {
+
+        // just for success messages
+        toastr.error(e.detail.error_msg, 'Error')
+
+    });
+
 
 
 
     // open-modal events
     let openModalEvents = [{ eventFromLiveWire: 'show_add_category_modal',modalToShow:'add_category_modal' },{ eventFromLiveWire: 'show_add_announcement_modal',modalToShow:'add_announcement_modal' },{
         eventFromLiveWire:'show_announcement_key_moments',modalToShow:'announcement_key_moments'
+    },{ eventFromLiveWire: 'show_add_faculty_modal',modalToShow:'add_faculty_modal' },{ eventFromLiveWire: 'show_add_department_modal',modalToShow:'add_department_modal' },,{
+        eventFromLiveWire:'show_add_program_modal',modalToShow:'add_program_modal'
     }]
     openModalEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
@@ -24,7 +33,7 @@ $(document).ready(() => {
     })
 
      // close-modal events
-     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' },{ eventFromLiveWire: 'hide_add_announcement_modal',modalToHide:'add_announcement_modal' },{ eventFromLiveWire: 'hide_announcement_key_moments',modalToHide:'announcement_key_moments' }]
+     let closeModalEvents = [{ eventFromLiveWire: 'hide_add_category_modal',modalToHide:'add_category_modal' },{ eventFromLiveWire: 'hide_add_announcement_modal',modalToHide:'add_announcement_modal' },{ eventFromLiveWire: 'hide_announcement_key_moments',modalToHide:'announcement_key_moments' },{ eventFromLiveWire: 'hide_add_faculty_modal',modalToHide:'add_faculty_modal' },{ eventFromLiveWire: 'hide_add_department_modal',modalToHide:'add_department_modal' },{ eventFromLiveWire: 'hide_add_program_modal',modalToHide:'add_program_modal' }]
      closeModalEvents.forEach((event_) => {
          window.addEventListener(event_.eventFromLiveWire, e => {
              // alert('yoh!')
@@ -36,7 +45,7 @@ $(document).ready(() => {
      })
 
     //delete events sweet-alerts
-    let deleteEvents=[{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'},{eventFromLiveWire:'show_delete_announcement_alert',eventToLiveWire:'confirm_delete_announcement_alert'},{eventFromLiveWire:'show_delete_key_moment',eventToLiveWire:'confirm_delete_key_moment'},{eventFromLiveWire:'announcement_img_delete',eventToLiveWire:'confirm_announcement_img_delete'}]
+    let deleteEvents=[{eventFromLiveWire:'show_delete_faculty_alert',eventToLiveWire:'confirm_delete_faculty_alert'},{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_category_alert'},{eventFromLiveWire:'show_delete_announcement_alert',eventToLiveWire:'confirm_delete_announcement_alert'},{eventFromLiveWire:'show_delete_key_moment',eventToLiveWire:'confirm_delete_key_moment'},{eventFromLiveWire:'announcement_img_delete',eventToLiveWire:'confirm_announcement_img_delete'},{eventFromLiveWire:'show_delete_category_alert',eventToLiveWire:'confirm_delete_department_alert'},{eventFromLiveWire:'show_delete_department_alert',eventToLiveWire:'confirm_delete_department_alert'},{eventFromLiveWire:'show_delete_program_alert',eventToLiveWire:'confirm_delete_program_alert'}]
     deleteEvents.forEach((event_) => {
         window.addEventListener(event_.eventFromLiveWire, e => {
             Swal.fire({

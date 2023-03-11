@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title style="text-transform: uppercase;" class="text-uppercase">ASK-KSTU  | {{ Session::get('page') }}</title>
+    <title style="text-transform: uppercase;" class="text-uppercase">ASK-KSTU  | {{ Str::of(Session::get('page'))->title }}</title>
 
 
     <!-- Custom fonts for this template-->

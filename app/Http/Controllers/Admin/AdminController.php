@@ -44,4 +44,19 @@ class AdminController extends Controller
         return view('admin.announcements.announcement_details');
 
     }
+    public function faculties(){
+        Session::put('page','faculties');
+        return view('admin.school.faculties');
+
+    }
+    public function programs(){
+        Session::put('page','programs');
+        return view('admin.school.programs');
+
+    }
+    public function departments(){
+        Session::put('page','departments');
+        return view('admin.school.departments');
+
+    }
 }

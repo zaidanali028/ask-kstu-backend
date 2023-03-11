@@ -136,7 +136,7 @@
 
                         <h5 class="modal-title" id="announcement_key_moments">ANNOUNCEMENT DETAIL MANAGEMENT
                         </h5>
-                        <i style="font-size:20px" class="mdi mdi-close" type="button" class="btn-close"
+                        <i style="font-size:20px" class="mdi mdi-close" wire:click.prevent="hide_modal" type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></i>
                         {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
@@ -151,7 +151,7 @@
                             <button class="btn btn-outline-primary w-100 "
                                 wire:click.prevent="add_announcement_keyMoment()">Add A New Key Moment</button>
 
-                            @if($announcement_key_moments)
+                            @if(($announcement_key_moments))
                             {{--  checking if array is not empty  --}}
 
                             @forelse ($announcement_key_moments as $index=>$key_moment )

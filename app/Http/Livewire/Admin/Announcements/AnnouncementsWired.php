@@ -74,6 +74,10 @@ class AnnouncementsWired extends Component
             $this->confirm_delete_key_moment($key_moment);
 
         }
+        if (!empty($announcement->featured_image)) {
+            Storage::disk('public')->delete($this->announcement_images . '/' . $announcement->featured_image);
+        }
+
         $announcement->delete();
         $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => ' announcement Deleted Successfully']);
 
@@ -81,7 +85,16 @@ class AnnouncementsWired extends Component
     public function remove_moment_img_perm($key_moment_id)
     {
         $img_obj = AnnouncementDetailModel::findOrFail($key_moment_id);
-        Storage::disk('public')->delete($this->moment_img_path . '/' . $img_obj->image);
+
+        if (!empty($img_obj->image)) {
+
+            Storage::disk('public')->delete($this->moment_img_path . '/' . $img_obj->image);
+        }
+
+    }
+    public function hide_modal()
+    {
+        $this->dispatchBrowserEvent('hide_add_announcement_modal');
 
     }
     public function confirm_delete_key_moment($key_moment)
@@ -160,11 +173,10 @@ class AnnouncementsWired extends Component
     }
     public function update_announcement()
     {
-            $announcement = AnnouncementModel::where(['id' => $this->announcement_id])->first();
+        $announcement = AnnouncementModel::where(['id' => $this->announcement_id])->first();
 
-        if(!empty($announcement->featured_image) && is_string($announcement->featured_image)){
-            $this->rules['featured_image']='';
-
+        if (!empty($announcement->featured_image) && is_string($announcement->featured_image)) {
+            $this->rules['featured_image'] = '';
 
         }
         $validated_data = Validator::make($this->inputs, $this->rules)->validate();
@@ -186,7 +198,7 @@ class AnnouncementsWired extends Component
         AnnouncementModel::where(['id' => $this->announcement_id])->update($this->object_to_array($validated_data));
         $this->dispatchBrowserEvent('hide_add_announcement_modal');
         $this->dispatchBrowserEvent('clear_file_fields');
-        $this->inputs=[];
+        $this->inputs = [];
 
         $this->dispatchBrowserEvent('show-success-toast', ["success_msg" => ' announcement Updated Successfully']);
 
@@ -211,8 +223,7 @@ class AnnouncementsWired extends Component
         $announcement->save();
         $this->addNewAnnouncement = false;
         $this->dispatchBrowserEvent('clear_file_fields');
-        $this->inputs=[];
-
+        $this->inputs = [];
 
         redirect()->back();
         $this->dispatchBrowserEvent('hide_add_announcement_modal');

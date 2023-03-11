@@ -26,7 +26,7 @@
         Main
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+   {{--  Announcements util  --}}
     <li class="nav-item">
         <a class="nav-link collapsed  @if (Session::get('page') == 'categories'||Session::get('page') == 'anouncements'||Session::get('page') == 'announcement details') bg-warning text-white @endif " href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
@@ -36,12 +36,31 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Announcement Features:</h6>
-                <a class="collapse-item  @if (Session::get('page') == 'categories') bg-primary text-white @endif" href="/admin/categories">Categories</a>
-                <a class="collapse-item  @if (Session::get('page') == 'anouncements') bg-primary text-white @endif" href="/admin/anouncements">Announcements</a>
-                <a class="collapse-item  @if (Session::get('page') == 'announcement details') bg-primary text-white @endif" href="/admin/announcement-details">Announcements Details</a>
+                <a class="collapse-item  @if (Session::get('page') == 'categories') bg-primary text-white @endif" href="/admin/announcement-util/categories">Categories</a>
+                <a class="collapse-item  @if (Session::get('page') == 'anouncements') bg-primary text-white @endif" href="/admin/announcement-util/anouncements">Announcements</a>
+                <a class="collapse-item  @if (Session::get('page') == 'announcement details') bg-primary text-white @endif" href="/admin/announcement-util/announcement-details">Announcements Details</a>
             </div>
         </div>
     </li>
+
+    {{--  faculties util  --}}
+    <li class="nav-item">
+        <a class="nav-link collapsed  @if (Session::get('page') == 'faculties'||Session::get('page') == 'programs'||Session::get('page') == 'departments') bg-warning text-white @endif " href="#" data-toggle="collapse" data-target="#facultiesCollapse"
+            aria-expanded="true" aria-controls="facultiesCollapse">
+            <i class="mdi mdi-school"></i>
+            <span>SCHOOL UTIL</span>
+        </a>
+        <div id="facultiesCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">School Features:</h6>
+                <a class="collapse-item  @if (Session::get('page') == 'faculties') bg-primary text-white @endif" href="/admin/school-util/faculties">Faculties</a>
+                <a class="collapse-item  @if (Session::get('page') == 'departments') bg-primary text-white @endif" href="/admin/school-util/departments">Departments</a>
+                <a class="collapse-item  @if (Session::get('page') == 'programs') bg-primary text-white @endif" href="/admin/school-util/programs">Programs</a>
+
+            </div>
+        </div>
+    </li>
+
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
