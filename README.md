@@ -27,9 +27,9 @@ AMONG STUDENTS(FOR NOW),HOPING TO TAILOR INTEREST ON OTHER ENTITIES/STAKE HOLDER
 - Fast and easy to navigate.
 - Beautiful UI,regards [SB ADMIN V2](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<!-- Laravel is accessible, powerful, and provides tools required for large, robust applications. -->
 
-## Learning Laravel
+<!-- ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
@@ -71,4 +71,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). -->
