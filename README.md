@@ -25,7 +25,7 @@ AMONG STUDENTS(FOR NOW),HOPING TO TAILOR INTEREST ON OTHER ENTITIES/STAKE HOLDER
 
 
 - Fast and easy to navigate.
-- Beautiful UI,regards (https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
+- Beautiful UI,regards [SB ADMIN V2](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
