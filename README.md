@@ -21,7 +21,7 @@ AMONG STUDENTS(FOR NOW),HOPING TO TAILOR INTEREST ON OTHER ENTITIES/STAKE HOLDER
 - [Add faculty,update & delete]
 - [Add department,update & delete]
 - [Add program,update & delete]
--[more on its way...]
+- [more on its way...]
 
 
 - Fast and easy to navigate.
