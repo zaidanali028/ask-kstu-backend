@@ -14,18 +14,18 @@ AMONG STUDENTS(FOR NOW),HOPING TO TAILOR INTEREST ON OTHER ENTITIES/STAKE HOLDER
 
 ### Super Admin Featured(Dean)
 
-- [Dean of students can login,once can also: ].
--[Add category of announcements,update & delete]
-- [Add announcements,update & delete].
-- [Add key moments,update & delete ].
--[Add faculty,update & delete]
--[Add department,update & delete]
--[Add program,update & delete]
+- [Dean of students can login,once can also: ]
+- [Add category of announcements,update & delete]
+- [Add announcements,update & delete]
+- [Add key moments,update & delete ]
+- [Add faculty,update & delete]
+- [Add department,update & delete]
+- [Add program,update & delete]
 -[more on its way...]
 
 
 - Fast and easy to navigate.
-- Beautiful UI,regards (https://github.com/StartBootstrap/startbootstrap-sb-admin-2).
+- Beautiful UI,regards (https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
